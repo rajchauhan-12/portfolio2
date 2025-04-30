@@ -1,11 +1,9 @@
-version: '3'
+version: '3.8'  # Remove if using latest compose spec
 services:
-  portfolio:
-    image: nginx:latest
-    container_name: react-portfolio
+  react-portfolio:
+    build: .
     ports:
       - "80:80"
     volumes:
-      - ./build:/usr/share/nginx/html:ro
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mounting directly to nginx.conf file
-    restart: always
+      - .\\nginx.conf:/etc/nginx/nginx.conf:ro
+      - .\\build:/usr/share/nginx/html:ro
