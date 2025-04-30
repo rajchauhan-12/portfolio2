@@ -1,24 +1,31 @@
-pipeline{
-	agent any
-	stages{
-	   stage('clone Repository'){
-		steps{
-		   git 'paste your git repo where your compose file is saved.git'
-		   }
-		}
-	  stage('Build & deploy'){
-		steps{
-		   script{
-		       bat 'docker-compose down || true'
-		       bat 'docker-compose pull'
-		       bat 'docker-compose up -d'
-                    }
-                 }
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                // Replace this with your actual GitHub repo URL
+                git 'https://github.com/rajchauhan-12/portfolio2.git'
             }
         }
-    post{
-	always{
-	    echo 'Pipeline finished'
-	    }
-         }
-}	
+
+        stage('Build & Deploy') {
+            steps {
+                script {
+                    // Safely stop any running containers
+                    bat 'docker-compose down || exit 0'
+                    // Pull latest images if needed
+                    bat 'docker-compose pull'
+                    // Start containers in detached mode
+                    bat 'docker-compose up -d --build'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished'
+        }
+    }
+}
