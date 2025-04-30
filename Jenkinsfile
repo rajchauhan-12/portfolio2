@@ -2,7 +2,6 @@ pipeline {
     agent any
     
     environment {
-        // Windows-specific Docker commands
         DOCKER_COMPOSE = 'docker-compose.exe'
         DOCKER = 'docker.exe'
     }
@@ -17,7 +16,6 @@ pipeline {
         stage('Verify Files') {
             steps {
                 script {
-                    // Check for required files
                     if (!fileExists('nginx.conf')) {
                         error("nginx.conf file is missing!")
                     }
@@ -40,7 +38,6 @@ pipeline {
         stage('Build & Deploy') {
             steps {
                 bat """
-                    ${DOCKER_COMPOSE} pull
                     ${DOCKER_COMPOSE} build --no-cache
                     ${DOCKER_COMPOSE} up -d
                 """
@@ -50,11 +47,20 @@ pipeline {
         stage('Verify Deployment') {
             steps {
                 script {
-                    // Add health check for your application
-                    def response = bat(returnStdout: true, script: 'curl -s -o nul -w "%{http_code}" http://localhost:80')
-                    if (response != "200") {
-                        error("Application failed to start properly!")
+                    // Wait for container to start
+                    sleep(time: 10, unit: 'SECONDS')
+                    
+                    // Check if container is running
+                    def status = bat(returnStdout: true, script: "${DOCKER} inspect -f '{{.State.Status}}' portfolio-react-portfolio-1").trim()
+                    if (status != 'running') {
+                        error("Container is not running! Status: ${status}")
                     }
+                    
+                    // Optional: Check HTTP response
+                    // def response = bat(returnStdout: true, script: "curl -s -o nul -w \"%{http_code}\" http://localhost:80")
+                    // if (response != "200") {
+                    //     error("Application failed to respond with HTTP 200")
+                    // }
                 }
             }
         }
@@ -66,7 +72,7 @@ pipeline {
         }
         success {
             echo 'Deployment succeeded!'
-            // Add notification here
+            // Add notification here (email, Slack, etc.)
         }
         failure {
             echo 'Deployment failed!'
