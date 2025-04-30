@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+ environment {
+        GIT_SSL_NO_VERIFY = 'true'  // Temporary workaround
+    }
     stages {
         stage('Clone Repository') {
             steps {
