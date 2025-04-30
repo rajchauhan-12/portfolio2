@@ -7,5 +7,5 @@ services:
       - "80:80"
     volumes:
       - ./build:/usr/share/nginx/html:ro
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mounting directly to nginx.conf file
     restart: always
