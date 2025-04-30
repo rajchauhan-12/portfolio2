@@ -13,6 +13,7 @@ pipeline {
             steps {
                 script {
                     // Safely stop any running containers
+                    env.DOCKER_TLS_VERIFY = "0"
                     bat 'docker-compose down || exit 0'
                     // Pull latest images if needed
                     bat 'docker-compose pull'
