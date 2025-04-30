@@ -20,9 +20,11 @@ pipeline {
                     bat 'docker system prune -f || exit 0'
                     bat '${DOCKER_COMPOSE} down || exit 0'
                     
-                    // Build and deploy
-                    bat '${DOCKER_COMPOSE} build --no-cache'
-                    bat '${DOCKER_COMPOSE} up -d'
+                    // Build React app
+                    bat 'npm install && npm run build'
+                    
+                    // Deploy
+                    bat '${DOCKER_COMPOSE} up -d --build'
                 }
             }
         }
@@ -43,7 +45,7 @@ pipeline {
                     def httpStatus = bat(returnStdout: true, 
                                        script: 'curl -s -o nul -w "%{http_code}" http://localhost:3000 || echo "500"').trim()
                     if (httpStatus != '200') {
-                        error("Health check failed - HTTP ${httpStatus}")
+                        error("Health check failed - HTTP ${httpStatus}. Check nginx configuration.")
                     }
                 }
             }
@@ -53,11 +55,15 @@ pipeline {
     post {
         always {
             echo 'Pipeline execution completed'
+            // Clean up (optional)
+            // bat '${DOCKER_COMPOSE} down || true'
         }
         failure {
             echo 'Pipeline failed - collecting diagnostics'
             bat 'docker ps -a'
-            bat 'docker-compose logs --no-color || true'
+            bat 'docker inspect react-portfolio'
+            bat 'docker logs react-portfolio'
+            bat 'type nginx.conf'  // Verify nginx config file contents
         }
     }
 }
