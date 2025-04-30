@@ -5,7 +5,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 // Replace this with your actual GitHub repo URL
-                git 'https://github.com/rajchauhan-12/portfolio2.git'
+                git branch: 'main', url: 'https://github.com/rajchauhan-12/portfolio2.git'
             }
         }
 
