@@ -45,7 +45,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import developerGif from '../assets/developer.gif'; // Import your GIF file
+import developerGif from '../assets/developer.gif'; // Your existing GIF
+import stickerImg from '../assets/39119915-09b7-49dd-bfaa-b2cb2bf7cbcb.png'; // New 3D Sticker
 
 const Home = () => {
   return (
@@ -70,7 +71,7 @@ const Home = () => {
               and thoughtful user interfaces.
             </p>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -86,29 +87,28 @@ const Home = () => {
           </motion.div>
         </div>
 
-        {/* Right side - GIF animation */}
+        {/* Right side - GIF and Sticker */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           className="hero-gif-container"
         >
-          <img 
-            src={developerGif} 
-            alt="Developer working animation" 
-            className="developer-gif"
-          />
-          <motion.div
-            animate={{
-              y: [0, -15, 0],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="floating-circle"
-          />
+          <div className="gif-sticker-wrapper">
+            <img 
+              src={developerGif} 
+              alt="Developer working animation" 
+              className="developer-gif"
+            />
+
+            <motion.img 
+              src={stickerImg}
+              alt="3D Sticker"
+              className="sticker-img"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </div>
         </motion.div>
       </div>
     </section>

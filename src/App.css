@@ -710,3 +710,55 @@ html {
     gap: 1rem;
   }
 }
+
+
+
+
+
+
+.home-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.hero-text-container {
+  flex: 1;
+  min-width: 300px;
+}
+
+.hero-gif-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+}
+
+.gif-sticker-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.developer-gif {
+  width: 250px;
+  margin-bottom: 1rem;
+}
+
+.sticker-img {
+  width: 150px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
