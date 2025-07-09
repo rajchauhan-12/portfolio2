@@ -44,7 +44,7 @@ const Hero = () => {
           transition={{ repeat: Infinity, duration: 2 }}
           className="scroll-icon"
         >
-          ↓
+          
         </motion.div>
       </div>
     </section>

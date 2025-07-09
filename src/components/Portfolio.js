@@ -19,7 +19,7 @@ const projects = [
     image: "/tutorfinder.png"
   },
   {
-    title: "AAI Trip Planner",
+    title: "AI Trip Planner",
     description: "AI-powered travel assistant that creates optimized itineraries based on user preferences and constraints.",
     technologies: ["Python", "Flask", "React", "OpenAI API"],
     github: "https://github.com/rajchauhan-12/Ai_Trip_Planner",

@@ -21,7 +21,7 @@ const VideoCV = () => {
         <div className="video-player-wrapper">
           <div className="video-player">
             <video width="100%" height="100%" controls>
-              <source src="/assets/videocv.mp4" type="video/mp4" />
+              <source src="/assets/video-resume.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
